@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ThemeProvider } from "next-themes";
 import React from "react";
 
 import "./globals.css";
+import Navbar from "@/components/navigation/navbar";
 
 const inter = localFont({
   src: "./fonts/interVF.ttf",
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
   description:
     "A community driven platform for career guidance. Get help, share knowledge, and collaborate with other jobseekers.",
   icons: {
-    icon: "/images/site-logo.svg",
+    icon: "/images/site-logo.png",
   },
 };
 
@@ -31,11 +33,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
